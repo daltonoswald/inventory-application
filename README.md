@@ -1,1 +1,1 @@
-Need to work on routes and controllers next, follow along with Express Tutorial Part 4
+Need to work on Displaying data next, Express tutorial Part 5 - Genre detail page

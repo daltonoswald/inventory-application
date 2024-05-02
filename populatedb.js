@@ -53,8 +53,8 @@ console.log(
     console.log(`Added format: ${name}`);
   }
   
-  async function artistCreate(index, first_name, family_name, d_origin, d_breakup) {
-    const artistdetail = { first_name: first_name, family_name: family_name };
+  async function artistCreate(index, name, d_origin, d_breakup) {
+    const artistdetail = { name: name };
     if (d_origin != false) artistdetail.date_of_origin = d_origin;
     if (d_breakup != false) artistdetail.date_of_breakup = d_breakup;
   
@@ -62,7 +62,7 @@ console.log(
   
     await artist.save();
     artists[index] = artist;
-    console.log(`Added artist: ${first_name} ${family_name}`);
+    console.log(`Added artist: ${name}`);
   }
   
   async function albumCreate(index, title, artist, tracks, release, genre, format) {
@@ -118,11 +118,12 @@ console.log(
   async function createArtists() {
     console.log("Adding artists");
     await Promise.all([
-      artistCreate(0, "Joyce Manor", "", "2009, 02, 15", false),
-      artistCreate(1, "Taylor", "Swift", "1989, 12, 13", false),   
-      artistCreate(2, "Prince Daddy & the Hyena", "", "2014, 12, 04", false),
-      artistCreate(3, "Snowing", "", "2009, 07, 01", "2011, 09, 12"),
-      artistCreate(4, "MF DOOM", "", "1971, 07, 13", "2020, 10, 31"),
+      artistCreate(0, "Joyce Manor", "2009, 02, 15", false),
+      artistCreate(1, "Taylor Swift", "1989, 12, 13", false),   
+      artistCreate(2, "Prince Daddy & the Hyena", "2014, 12, 04", false),
+      artistCreate(3, "Snowing", "2009, 07, 01", "2011, 09, 12"),
+      artistCreate(4, "MF DOOM", "1971, 07, 13", "2020, 10, 31"),
+      artistCreate(5, "Olivia Rodrigo", "2003, 02, 20", false)
     ]);
   }
   
@@ -172,7 +173,14 @@ console.log(
         19,
         1999,
         [genres[2]],
-        [formats[0], formats[1], formats[2]])    
+        [formats[0], formats[1], formats[2]]),
+      albumCreate(6,
+        "Red",
+        artists[5],
+        12,
+        2023,
+        genres[1],
+        [formats[0], formats[1]]),    
     ]);
   }
   

@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= title
+  if format_list.length
+    ul
+      each format in format_list
+        li
+          a(href=format.url) #{format.name}
+
+  else
+    p There are no formats.
