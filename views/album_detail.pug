@@ -1,0 +1,20 @@
+extends layout 
+
+block content 
+    h1 #{album.title}
+
+    p #[strong Artist: ]
+        a(href=album.artist.url) #{album.artist.name}
+    p #[strong Released: ] #{album.release}
+    p #[strong Tracklist: ] #{album.tracks}
+    p #[strong Genres: ]
+        each val, index in album.genre 
+            a(href=val.url) #{val.name}
+            if index < album.genre.length - 1
+                |,&nbsp;
+
+    div(styles='margin-left:20px;margin-top:20px')
+        h4 Available Copies: 
+            p #{album.stock}
+            p #[strong Description] #{album.description}
+            p #[strong Price] $#{album.price}

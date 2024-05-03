@@ -1,15 +1,13 @@
 const Album = require("../models/album");
 const Artist = require("../models/artist");
 const Genre = require("../models/genre");
-const Format = require("../models/format");
 
 const asyncHandler = require("express-async-handler");
 
 exports.index = asyncHandler(async (req, res, next) => {
-  // Get details of albums, formats, artists and genre counts (in parallel)
+  // Get details of albums, artists and genre counts (in parallel)
   const [
     numAlbums,
-    numFormats,
     // numBookInstances,
     // numAvailableBookInstances,
     numArtists,
@@ -18,7 +16,6 @@ exports.index = asyncHandler(async (req, res, next) => {
     Album.countDocuments({}).exec(),
     // BookInstance.countDocuments({}).exec(),
     // BookInstance.countDocuments({ status: "Available" }).exec(),
-    Format.countDocuments({}).exec(),
     Artist.countDocuments({}).exec(),
     Genre.countDocuments({}).exec(),
   ]);
@@ -28,7 +25,6 @@ exports.index = asyncHandler(async (req, res, next) => {
     album_count: numAlbums,
     // book_instance_count: numBookInstances,
     // book_instance_available_count: numAvailableBookInstances,
-    format_count: numFormats,
     artist_count: numArtists,
     genre_count: numGenres,
   });
@@ -47,7 +43,21 @@ exports.album_list = asyncHandler(async (req, res, next) => {
 
 // Display detail page for a specific album.
 exports.album_detail = asyncHandler(async (req, res, next) => {
-  res.send(`NOT IMPLEMENTED: album detail: ${req.params.id}`);
+  const album = await Album.findById(req.params.id)
+  .populate("artist")
+  .populate("genre")
+  .exec();
+  
+  if (album === null) {
+    const err = new Error("Album not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  res.render("album_detail", {
+    title: album.title,
+    album: album,
+  })
 });
 
 // Display album create form on GET.

@@ -1,0 +1,18 @@
+extends layout 
+
+block content 
+
+    h1 #{artist.name}
+    p #{artist.date_of_origin_formatted} - #{artist.date_of_breakup}
+
+    div(style='margin-left:20px;margin-top:20px')
+
+        h4 Albums 
+            if artist_albums.length 
+                dl 
+                    each album in artist_albums 
+                        dt 
+                            a(href=album.url) #{album.title}
+                        dd #{album.description}
+            else 
+                p This artist has no albums.

@@ -5,7 +5,6 @@ const router = express.Router();
 const album_controller = require("../controllers/albumController");
 const artist_controller = require("../controllers/artistController");
 const genre_controller = require("../controllers/genreController");
-const format_controller = require("../controllers/formatController");
 
 // ALBUM ROUTES ///
 
@@ -87,31 +86,5 @@ router.get("/genre/:id", genre_controller.genre_detail);
 
 // GET request for list of all Genre.
 router.get("/genres", genre_controller.genre_list);
-
-/// FORMAT ROUTES ///
-
-// GET request for creating a format. NOTE This must come before route that displays format (uses id).
-router.get("/format/create", format_controller.format_create_get);
-
-//POST request for creating format.
-router.post("/format/create", format_controller.format_create_post);
-
-// GET request to delete format.
-router.get("/format/:id/delete", format_controller.format_delete_get);
-
-// POST request to delete format.
-router.post("/format/:id/delete", format_controller.format_delete_post);
-
-// GET request to update format.
-router.get("/format/:id/update", format_controller.format_update_get);
-
-// POST request to update format.
-router.post("/format/:id/update", format_controller.format_update_post);
-
-// GET request for one format.
-router.get("/format/:id", format_controller.format_detail);
-
-// GET request for list of all format.
-router.get("/formats", format_controller.format_list);
 
 module.exports = router;

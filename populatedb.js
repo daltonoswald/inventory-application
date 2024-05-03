@@ -10,12 +10,10 @@ console.log(
   const Album = require("./models/album");
   const Artist = require("./models/artist");
   const Genre = require("./models/genre");
-  const Format = require("./models/format")
   
   const genres = [];
   const artists = [];
   const albums = [];
-  const formats = [];
   
   const mongoose = require("mongoose");
   mongoose.set("strictQuery", false);
@@ -31,7 +29,6 @@ console.log(
     await createGenres();
     await createArtists();
     await createAlbums();
-    await createFormats();
     console.log("Debug: Closing mongoose");
     mongoose.connection.close();
   }
@@ -46,12 +43,6 @@ console.log(
     console.log(`Added genre: ${name}`);
   }
 
-  async function formatCreate(index, name) {
-    const format = new Format({ name: name });
-    await format.save();
-    formats[index] = format;
-    console.log(`Added format: ${name}`);
-  }
   
   async function artistCreate(index, name, d_origin, d_breakup) {
     const artistdetail = { name: name };
@@ -65,17 +56,18 @@ console.log(
     console.log(`Added artist: ${name}`);
   }
   
-  async function albumCreate(index, title, artist, tracks, release, genre, format) {
+  async function albumCreate(index, title, artist, tracks, release, genre, price, stock, description) {
     const albumdetail = {
       title: title,
       artist: artist,
       tracks: tracks,
       release: release,
       genre: genre,
-      format: format,
+      price: price,
+      stock: stock,
+      description: description,
     };
     if (genre != false) albumdetail.genre = genre;
-    if (format != false) albumdetail.format = format;
   
     const album = new Album(albumdetail);
     await album.save();
@@ -105,15 +97,6 @@ console.log(
       genreCreate(2, "Rap"),
     ]);
   }
-
-  async function createFormats() {
-    console.log("Adding formats");
-    await Promise.all([
-        formatCreate(0, "Vinyl"),
-        formatCreate(1, "CD"),
-        formatCreate(2, "Cassette")
-    ])
-  }
   
   async function createArtists() {
     console.log("Adding artists");
@@ -136,7 +119,9 @@ console.log(
         10,
         2011,
         [genres[0]],
-        [formats[0], formats[1]],
+        20,
+        10,
+        "White with Black Splatter",
       ),
       albumCreate(1,
         "Never Hungover Again",
@@ -144,7 +129,9 @@ console.log(
         10,
         2014,
         [genres[0]],
-        [formats[0], formats[1]],
+        20,
+        13,
+        "Transparent Teal"
       ),
       albumCreate(2,
         "Red",
@@ -152,35 +139,50 @@ console.log(
         16,
         2012,
         genres[1],
-        [formats[0], formats[1], formats[2]]),
+        30,
+        27,
+        "Red",
+      ),
       albumCreate(3,
         "Cosmic Thrill Seekers",
         artists[2],
         14,
         2019,
         genres[0],
-        [formats[0], formats[1]]),
+        25,
+        6,
+        "Foggy Midnight Blue",
+      ),
       albumCreate(4,
         "I Could Do Whatever I Wanted If I Wanted",
         artists[3],
         11,
         2011,
         genres[0],
-        [formats[0], formats[1], formats[2]]),
+        15,
+        3,
+        "Black",
+        ),
       albumCreate(5,
         "Operation: Doomsday",
         artists[4],
         19,
         1999,
         [genres[2]],
-        [formats[0], formats[1], formats[2]]),
+        30,
+        12,
+        "Steel Gray",
+        ),
       albumCreate(6,
-        "Red",
+        "Guts",
         artists[5],
         12,
         2023,
         genres[1],
-        [formats[0], formats[1]]),    
+        30,
+        23,
+        "Lavender"
+        ),    
     ]);
   }
   

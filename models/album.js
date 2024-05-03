@@ -8,7 +8,9 @@ const AlbumSchema = new Schema({
     tracks: { type: Number, required: true },
     release: { type: Number, required: true },
     genre: [{ type: Schema.Types.ObjectId, ref: "Genre" }],
-    format: [{ type: Schema.Types.ObjectId, ref: "Formats" }],
+    price: { type: Number, required: true },
+    stock: { type: Number, required: true },
+    description: { type: String, required: true },
 });
 
 // Virtual for albums URL
