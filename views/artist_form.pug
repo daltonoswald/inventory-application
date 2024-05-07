@@ -9,10 +9,10 @@ block content
             input#name.form-control(type='text', placeholder='Artist Name' name='name' required value=(undefined===artist ? '' : artist.name) )
         div.form-group
             label(for='date_of_origin') Date of Birth/Origin
-            input#date_of_origin.form-control(type='date', name='date_of_origin' value=(undefined===artist.date_of_origin ? '' : artist.date_of_origin) )
+            input#date_of_origin.form-control(type='date', name='date_of_origin' value=(undefined===artist ? '' : artist) )
         div.form-group
             label(for='date_of_breakup') Date of Death/Breakup
-            input#date_of_breakup.form-control(type='date', name='date_of_breakup' value=(undefined===artist.date_of_breakup ? '' : artist.date_of_breakup) )
+            input#date_of_breakup.form-control(type='date', name='date_of_breakup' value=(undefined===artist ? '' : artist) )
         button.btn.btn-primary(type='submit') Submit 
 
     if errors 
