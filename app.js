@@ -7,13 +7,18 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const catalogRouter = require('./routes/catalog');
+const compression = require('compression');
+const helmet = require('helmet');
 
 var app = express();
 
 // Set up mongoose connection
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
-const mongoDB = "mongodb+srv://daltonoswald:pass4invApp@inventoryapplication.d6zca9d.mongodb.net/inventoryapplication?retryWrites=true&w=majority&appName=inventoryapplication";
+
+const dev_db_url = 
+  "mongodb+srv://daltonoswald:pass4invApp@inventoryapplication.d6zca9d.mongodb.net/inventoryapplication?retryWrites=true&w=majority&appName=inventoryapplication";
+  const mongoDB = process.env.MONGODB_URI || dev_db_url;
 
 main().catch((err) => console.log(err));
 async function main() {
@@ -28,6 +33,21 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(compression());
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      "script-src": ["'self'", "code.jquery.com", "cdn.jsdelivr.net"],
+    },
+  }),
+);
+const RateLimit = require('express-rate-limit');
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 20,
+});
+app.use(limiter);
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
