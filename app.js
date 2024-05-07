@@ -9,6 +9,7 @@ var usersRouter = require('./routes/users');
 const catalogRouter = require('./routes/catalog');
 const compression = require('compression');
 const helmet = require('helmet');
+const RateLimit = require('express-rate-limit');
 
 var app = express();
 
@@ -41,7 +42,7 @@ app.use(
     },
   }),
 );
-const RateLimit = require('express-rate-limit');
+
 const limiter = RateLimit({
   windowMs: 1 * 60 * 1000,
   max: 20,
