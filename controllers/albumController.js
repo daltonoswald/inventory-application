@@ -1,8 +1,8 @@
 const Album = require("../models/album");
 const Artist = require("../models/artist");
 const Genre = require("../models/genre");
-
 const asyncHandler = require("express-async-handler");
+const { body, validationResult } = require('express-validator');
 
 exports.index = asyncHandler(async (req, res, next) => {
   // Get details of albums, artists and genre counts (in parallel)
@@ -62,13 +62,97 @@ exports.album_detail = asyncHandler(async (req, res, next) => {
 
 // Display album create form on GET.
 exports.album_create_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: album create GET");
+  const [allArtists, allGenres] = await Promise.all([
+    Artist.find().sort({ name: 1 }).exec(),
+    Genre.find().sort({ name: 1 }).exec(),
+  ]);
+
+  res.render("album_form", {
+    title: "Create Album",
+    artists: allArtists,
+    genres: allGenres,
+  })
 });
 
 // Handle album create on POST.
-exports.album_create_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: album create POST");
-});
+exports.album_create_post = [
+  (req, res, next) => {
+    if (!Array.isArray(req.body.genre)) {
+      req.body.genre = typeof req.body.genre === "undefined" ? [] : [req.body.genre];
+    }
+    next();
+  },
+  body("title", "Title must not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("artist", "Artist must not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("tracks", "Tracks must not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("release", "Release Year must not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("genre.*", "Genre must not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("price", "Price must not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("stock", "Stock must not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("description", "Description must not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const album = new Album({
+      title: req.body.title,
+      artist: req.body.artist,
+      tracks: req.body.tracks,
+      release: req.body.release,
+      genre: req.body.genre,
+      price: req.body.price,
+      stock: req.body.stock,
+      description: req.body.description,
+    });
+
+    if (!errors.isEmpty()) {
+      const [allArtists, allGenres] = await Promise.all([
+        Artist.find().sort({ name: 1 }).exec(),
+        Genre.find().sort({ name: 1 }).exec(),
+      ]);
+
+      for (const genre of allGenres) {
+        if (album.genre.includes(genre._id)) {
+          genre.checked = 'true';
+        }
+      }
+      res.render("album_form", {
+        title: "Create Album",
+        artists: allArtists,
+        genres: allGenres,
+        album: album,
+        errors: errors.array(),
+      });
+    } else {
+      await album.save();
+      res.redirect(album.url);
+    }
+  })
+]
 
 // Display album delete form on GET.
 exports.album_delete_get = asyncHandler(async (req, res, next) => {

@@ -79,12 +79,40 @@ exports.artist_create_post = [
 
 // Display artist delete form on GET.
 exports.artist_delete_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: artist delete GET");
+  const [artist, allAlbumsByArtist] = await Promise.all([
+    Artist.findById(req.params.id).exec(),
+    Album.find({ artist: req.params.id }, "title release").exec(),
+  ]);
+
+  if (artist === null) {
+    res.redirect("/catalog/artist");
+  }
+
+  res.render("artist_delete", {
+    title: "Delete Artist",
+    artist: artist,
+    artist_albums: allAlbumsByArtist,
+  })
 });
 
 // Handle artist delete on POST.
 exports.artist_delete_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: artist delete POST");
+  const [artist, allAlbumsByArtist] = await Promise.all([
+    Artist.findById(req.params.id).exec(),
+    Album.find({ artist: req.params.id }, "title release").exec(),
+  ]);
+
+  if (allAlbumsByArtist.length > 0) {
+    res.render("artist_delete", {
+      title: "Delete Artist",
+      artist: artist,
+      artist_albums: allAlbumsByArtist,
+    });
+    return;
+  } else {
+    await Artist.findByIdAndDelete(req.body.artistid);
+    res.redirect('/catalog/artists');
+  }
 });
 
 // Display artist update form on GET.
