@@ -14,7 +14,12 @@ block content
                 |,&nbsp;
 
     div(styles='margin-left:20px;margin-top:20px')
-        h4 Available Copies: 
-            p #{album.stock}
-            p #[strong Description] #{album.description}
-            p #[strong Price] $#{album.price}
+        p #[strong Price: ] $#{album.price}
+        p #[strong Copies: ] #{album.stock}
+        p #[strong Description: ] #{album.description}
+
+        hr
+        p
+            a(href=album.url+'/delete') Delete Album
+        p 
+            a(href=album.url+'/update') Update Album

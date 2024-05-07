@@ -3,7 +3,7 @@ extends layout
 block content 
 
     h1 #{artist.name}
-    p #{artist.date_of_origin_formatted} - #{artist.date_of_breakup}
+    p #{artist.date_of_origin_formatted} - #{artist.date_of_breakup_formatted}
 
     div(style='margin-left:20px;margin-top:20px')
 
@@ -20,3 +20,5 @@ block content
         hr
         p
             a(href=artist.url+'/delete') Delete Artist
+        p 
+            a(href=artist.url+'/update') Update Artist
