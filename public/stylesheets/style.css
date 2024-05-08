@@ -1,5 +1,28 @@
 .sidebar-nav {
-  margin-top: 20px;
-  padding: 0;
+  /* margin-top: 20px; */
+  padding: 20px;
+  /* padding: 0; */
   list-style: none;
+  height: 100vh;
+  background-color: #9fd3c7;
+  font-size: 16px;
+}
+
+a, a:hover {
+  color: #385170;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #142d4c;
+}
+
+.col-sm-2 {
+  margin: 0;
+  padding: 0;
+}
+
+.col-sm-10 {
+  background-color: #ececec;
 }
