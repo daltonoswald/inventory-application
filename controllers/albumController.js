@@ -3,6 +3,19 @@ const Artist = require("../models/artist");
 const Genre = require("../models/genre");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require('express-validator');
+const multer = require("multer");
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/images/");
+  },
+  filename: function ( req, file, cb) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+      return cb(new Error("Please upload a valid image file"));
+    }
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({ storage: storage });
 
 exports.index = asyncHandler(async (req, res, next) => {
   // Get details of albums, artists and genre counts (in parallel)
@@ -82,6 +95,7 @@ exports.album_create_post = [
     }
     next();
   },
+  upload.single("image"),
   body("title", "Title must not be empty.")
     .trim()
     .isLength({ min: 1 })
@@ -127,6 +141,7 @@ exports.album_create_post = [
       price: req.body.price,
       stock: req.body.stock,
       description: req.body.description,
+      image: req.file ? req.file.filename : null,
     });
 
     if (!errors.isEmpty()) {
