@@ -75,20 +75,6 @@ console.log(
     console.log(`Added album: ${title}`);
   }
   
-//   async function bookInstanceCreate(index, book, imprint, due_back, status) {
-//     const bookinstancedetail = {
-//       book: book,
-//       imprint: imprint,
-//     };
-//     if (due_back != false) bookinstancedetail.due_back = due_back;
-//     if (status != false) bookinstancedetail.status = status;
-  
-//     const bookinstance = new BookInstance(bookinstancedetail);
-//     await bookinstance.save();
-//     bookinstances[index] = bookinstance;
-//     console.log(`Added bookinstance: ${imprint}`);
-//   }
-  
   async function createGenres() {
     console.log("Adding genres");
     await Promise.all([
@@ -185,50 +171,3 @@ console.log(
         ),    
     ]);
   }
-  
-//   async function createBookInstances() {
-//     console.log("Adding authors");
-//     await Promise.all([
-//       bookInstanceCreate(0, books[0], "London Gollancz, 2014.", false, "Available"),
-//       bookInstanceCreate(1, books[1], " Gollancz, 2011.", false, "Loaned"),
-//       bookInstanceCreate(2, books[2], " Gollancz, 2015.", false, false),
-//       bookInstanceCreate(3,
-//         books[3],
-//         "New York Tom Doherty Associates, 2016.",
-//         false,
-//         "Available"
-//       ),
-//       bookInstanceCreate(4,
-//         books[3],
-//         "New York Tom Doherty Associates, 2016.",
-//         false,
-//         "Available"
-//       ),
-//       bookInstanceCreate(5,
-//         books[3],
-//         "New York Tom Doherty Associates, 2016.",
-//         false,
-//         "Available"
-//       ),
-//       bookInstanceCreate(6,
-//         books[4],
-//         "New York, NY Tom Doherty Associates, LLC, 2015.",
-//         false,
-//         "Available"
-//       ),
-//       bookInstanceCreate(7,
-//         books[4],
-//         "New York, NY Tom Doherty Associates, LLC, 2015.",
-//         false,
-//         "Maintenance"
-//       ),
-//       bookInstanceCreate(8,
-//         books[4],
-//         "New York, NY Tom Doherty Associates, LLC, 2015.",
-//         false,
-//         "Loaned"
-//       ),
-//       bookInstanceCreate(9, books[0], "Imprint XXX2", false, false),
-//       bookInstanceCreate(10, books[1], "Imprint XXX3", false, false),
-//     ]);
-//   }
