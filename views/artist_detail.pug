@@ -3,7 +3,10 @@ extends layout
 block content 
 
     h1 #{artist.name}
-    p #{artist.date_of_origin_formatted} - #{artist.date_of_breakup_formatted}
+    if (artist.date_of_breakup != null)
+        p #{artist.date_of_origin_formatted} - #{artist.date_of_breakup_formatted}
+    else
+        p #{artist.date_of_origin_formatted} - 
 
     div(style='margin-left:20px;margin-top:20px')
 
