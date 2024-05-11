@@ -19,7 +19,7 @@ const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 
 const dev_db_url = process.env.DEV_DB_URL
-  const mongoDB = dev_db_url || MONGODB_URI;
+const mongoDB = process.env.MONGODB_URI || dev_db_url;
 
 main().catch((err) => console.log(err));
 async function main() {
