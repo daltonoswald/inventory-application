@@ -179,7 +179,7 @@ exports.album_delete_get = asyncHandler(async (req, res, next) => {
   }
 
   res.render("album_delete", {
-    title: "Delete album",
+    title: "Delete Album",
     album: album,
   })
 });
@@ -188,7 +188,7 @@ exports.album_delete_get = asyncHandler(async (req, res, next) => {
 exports.album_delete_post = asyncHandler(async (req, res, next) => {
   const album = await Album.findById(req.params.id).populate("artist").populate("genre").exec()
 
-  if (album === null) {
+  if ((album === null) || (req.body.passcode !== 'adminDeleteCode')) {
     res.render('album_delete', {
       title: "Delete Album",
       album: album,

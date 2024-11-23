@@ -21,5 +21,7 @@ block content
         form(method="POST")
             div.form-group
                 input#artistid.form-control(type='hidden', name='artistid', value=artist._id)
+                label(class='passcode-label', for='passcode')
+                input(class='passcode-input', name='passcode')
 
             button.btn.btn-primary(type='submit') Delete

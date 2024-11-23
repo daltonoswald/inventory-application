@@ -96,7 +96,7 @@ exports.genre_delete_post = asyncHandler(async (req, res, next) => {
     Album.find({ genre: req.params.id }).exec(),
 ]);
 
-  if (allAlbumsWithGenre.length > 0) {
+  if ((allAlbumsWithGenre.length > 0) || (req.body.passcode !== 'adminDeleteCode')) {
     res.render('genre_delete', {
       title: "Delete Genre",
       genre: genre,

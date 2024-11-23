@@ -102,7 +102,7 @@ exports.artist_delete_post = asyncHandler(async (req, res, next) => {
     Album.find({ artist: req.params.id }, "title release").exec(),
   ]);
 
-  if (allAlbumsByArtist.length > 0) {
+  if ((allAlbumsByArtist.length > 0) || (req.body.passcode !== 'adminDeleteCode')) {
     res.render("artist_delete", {
       title: "Delete Artist",
       artist: artist,
