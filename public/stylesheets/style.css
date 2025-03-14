@@ -1,11 +1,25 @@
-.sidebar-nav {
-  /* margin-top: 20px; */
+/* .sidebar-nav {
   padding: 20px;
-  /* padding: 0; */
   list-style: none;
   height: 100vh;
   background-color: #9fd3c7;
   font-size: 16px;
+} */
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  list-style: none;
+  height: 100vh;
+  background-color: #9fd3c7;
+  font-size: 16px;
+}
+
+.sidebar-nav,
+.sidebar-links {
+  list-style: none;
 }
 
 a, a:hover {
@@ -25,4 +39,22 @@ a:hover {
 
 .col-sm-10 {
   background-color: #ececec;
+}
+
+.detail-image {
+  max-width: 256px;
+}
+
+.link {
+  display: flex;
+  gap: 4px;
+}
+
+.link > p {
+  margin: 0;
+  align-content: center;
+}
+
+.link-icon {
+  max-width: 24px;
 }
