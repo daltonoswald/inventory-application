@@ -6,8 +6,11 @@ block content
     ul
       each album in album_list
         li
-          a(href=album.url) #{album.title}
-          |  (#{album.artist.name}, released #{album.release})
+          a(href=album.url) #{album.title} 
+          | - 
+          //- |  (#{album.artist.name}, released #{album.release})
+          a(href=album.artist.url) #{album.artist.name},
+          |  released #{album.release}
 
   else
     p There are no albums.

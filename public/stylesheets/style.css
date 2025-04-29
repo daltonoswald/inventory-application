@@ -48,6 +48,7 @@ a:hover {
 .link {
   display: flex;
   gap: 4px;
+  margin: 4px 0;
 }
 
 .link > p {

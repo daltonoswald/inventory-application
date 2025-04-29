@@ -206,6 +206,10 @@ exports.album_update_get = asyncHandler(async (req, res, next) => {
     Artist.find().sort({ name: 1 }).exec(),
     Genre.find().sort({ name: 1 }).exec(),
   ]);
+  // console.log(album)
+  // console.log(album.artist)
+  console.log(album.artist._id.toString())
+  console.log(allArtists[0]._id.toString())
 
   if (album === null) {
     const err = new Error("Album not found");
@@ -227,10 +231,13 @@ exports.album_update_get = asyncHandler(async (req, res, next) => {
 
 // Handle album update on POST.
 exports.album_update_post = [
+  
   (req, res, next) => {
     if (!Array.isArray(req.body.genre)) {
       req.body.genre = typeof req.body.genre === "undefined" ? [] : [req.body.genre];
     }
+    console.log(req)
+    console.log(req.body)
     next();
   },
 

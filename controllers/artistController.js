@@ -27,7 +27,7 @@ exports.artist_detail = asyncHandler(async (req, res, next) => {
   }
 
   res.render("artist_detail", {
-    title: "Artist Deatil",
+    title: "Artist Detail",
     artist: artist,
     artist_albums: allAlbumsByArtist,
   })
