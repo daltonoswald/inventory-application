@@ -134,9 +134,7 @@ exports.artist_update_post = [
     .trim()
     .isLength({ min: 1 })
     .escape()
-    .withMessage("Artist must be specified.")
-    .isAlphanumeric()
-    .withMessage("Artist name has non-alphanumeric characters."),
+    .withMessage("Artist must be specified."),
   body("date_of_origin", "Invalid date of birth")
     .optional({ values: "falsy" })
     .isISO8601()
@@ -164,7 +162,7 @@ exports.artist_update_post = [
       return;
     } else {
       // Data from form is valid. Update the record.
-      await artist.findByIdAndUpdate(req.params.id, artist, {});
+      await Artist.findByIdAndUpdate(req.params.id, artist, {});
       res.redirect(artist.url);
     }
   }),

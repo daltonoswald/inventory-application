@@ -146,7 +146,7 @@ exports.genre_update_post = [
       return;
     } else {
       // Data from form is valid. Update the record.
-      await Genre.findByIdAndUpdate(req.params.id, genre);
+      await Genre.findByIdAndUpdate(req.params.id, genre, {});
       res.redirect(genre.url);
     }
   }),

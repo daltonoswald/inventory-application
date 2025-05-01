@@ -208,7 +208,7 @@ exports.album_update_get = asyncHandler(async (req, res, next) => {
   ]);
   // console.log(album)
   // console.log(album.artist)
-  console.log(album.artist._id.toString())
+  console.log('artist id - ', album.artist._id.toString())
   console.log(allArtists[0]._id.toString())
 
   if (album === null) {
@@ -220,6 +220,9 @@ exports.album_update_get = asyncHandler(async (req, res, next) => {
   allGenres.forEach((genre) => {
     if (album.genre.includes(genre._id)) genre.checked = 'true';
   });
+  console.log('album: ')
+  console.log(album);
+  console.log('album: ')
 
   res.render('album_form', {
     title: "Update Album",
@@ -232,14 +235,12 @@ exports.album_update_get = asyncHandler(async (req, res, next) => {
 // Handle album update on POST.
 exports.album_update_post = [
   
-  (req, res, next) => {
-    if (!Array.isArray(req.body.genre)) {
-      req.body.genre = typeof req.body.genre === "undefined" ? [] : [req.body.genre];
-    }
-    console.log(req)
-    console.log(req.body)
-    next();
-  },
+  // (req, res, next) => {
+  //   if (!Array.isArray(req.body.genre)) {
+  //     req.body.genre = typeof req.body.genre === "undefined" ? [] : [req.body.genre];
+  //   }
+  //   next();
+  // },
 
   body("title", "Title must not be empty.")
     .trim()
@@ -277,6 +278,8 @@ exports.album_update_post = [
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
 
+    console.log('title - ', req.body.title)
+    console.log('genre,', req.body.genre)
     const album = new Album({
       title: req.body.title,
       artist: req.body.artist,
@@ -288,8 +291,12 @@ exports.album_update_post = [
       description: req.body.description,
       _id: req.params.id,
     });
+    console.log('in async')
+    console.log(album)
 
     if (!errors.isEmpty()) {
+      console.log('in !isEmpty error');
+      console.log(album)
       const [allArtists, allGenres] = await Promise.all([
         Artist.find().sort({ name: 1 }).exec(),
         Genre.find().sort({ name: 1 }).exec(),
@@ -309,6 +316,7 @@ exports.album_update_post = [
       });
       return;
     } else {
+      console.log('in else');
       const updatedAlbum = await Album.findByIdAndUpdate(req.params.id, album, {});
       res.redirect(updatedAlbum.url);
     }
